@@ -8,7 +8,10 @@ enum Coin: Int, CaseIterable {
 }
 
 let lucky = Coin(rawValue: 1)
-lucky?.rawValue
+print(lucky?.rawValue)
+let notSoMuch = Coin(rawValue: 2)
+print(notSoMuch?.rawValue)
+
 
 struct Email: RawRepresentable {
   var rawValue: String
@@ -21,7 +24,12 @@ struct Email: RawRepresentable {
   }
 }
 
-func send(message: String, to: Email) {
+let notEmail = Email(rawValue: "suejinv")
+print(notEmail?.rawValue)
+let email = Email(rawValue: "suejinv@naver.com")
+print(email?.rawValue)
+
+func send(message: String, to: Email) throws {
 
 }
 

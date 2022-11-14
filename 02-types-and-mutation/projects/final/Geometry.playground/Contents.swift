@@ -35,6 +35,21 @@ struct Rectangle: Equatable {
   var size: Size
 }
 
+// 1st draft version
+/*
+ extension Point {
+  func flipped() -> Self {
+    Point(x: self.y, y: self.x)
+  }
+
+  mutating func flip() {
+    let temp = self
+    self.x = temp.y
+    self.y = temp.x
+  }
+}
+*/
+
 extension Point {
   func flipped() -> Self {
     Point(x: y, y: x)
@@ -44,20 +59,7 @@ extension Point {
   }
 }
 
-extension Point {
-  static var zero: Point {
-    Point(x: 0, y: 0)
-  }
-  static func random(inRadius radius: Double) -> Point {
-    guard radius >= 0 else {
-      return .zero
-    }
-    let x = Double.random(in: -radius ... radius)
-    let maxY = (radius * radius - x * x).squareRoot()
-    let y = Double.random(in: -maxY ... maxY)
-    return Point(x: x, y: y)
-  }
-}
+
 
 struct PermutedCongruential: RandomNumberGenerator {
   private var state: UInt64
@@ -84,17 +86,31 @@ struct PermutedCongruential: RandomNumberGenerator {
 }
 
 extension Point {
+  static var zero: Point {
+    Point(x: 0, y: 0)
+  }
+  static func random(inRadius radius: Double) -> Point {
+    guard radius >= 0 else {
+      return .zero
+    }
+
+    let x = Double.random(in: -radius ... radius)
+    let maxY = (radius * radius - x * x).squareRoot()
+    let y = Double.random(in: -maxY ... maxY)
+    return Point(x: x, y: y)
+  }
+}
+
+extension Point {
   static func random(inRadius radius: Double,
                      using randomSource:
                       inout PermutedCongruential) -> Point {
     guard radius >= 0 else {
       return .zero
     }
-    let x = Double.random(in: -radius...radius,
-                          using: &randomSource)
+    let x = Double.random(in: -radius...radius, using: &randomSource)
     let maxY = (radius * radius - x * x).squareRoot()
-    let y = Double.random(in: -maxY...maxY,
-                          using: &randomSource)
+    let y = Double.random(in: -maxY...maxY, using: &randomSource)
     return Point(x: x, y: y)
   }
 }
